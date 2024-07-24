@@ -8,22 +8,36 @@ import * as React from 'react'
 // PokemonDataView: the stuff we use to display the pokemon info
 import {PokemonDataView, PokemonForm, PokemonInfoFallback} from '../pokemon'
 import {fetchPokemon} from '../pokemon'
+import sadpokemon from './sadpokemon.jpg'
 
 function PokemonInfo({pokemonName}) {
   // 🐨 Have state for the pokemon (null)
   // 🐨 use React.useEffect where the callback should be called whenever the
   // pokemon name changes.
   const [pokemon, setPokemon] = React.useState(null)
+  const [error, setError] = React.useState(null)
 
   React.useEffect(() => {
     if (!pokemonName) {
       return
     }
     setPokemon(null)
-    fetchPokemon(pokemonName).then(pokemonData => {
-      setPokemon(pokemonData)
-    })
+    setError(null)
+    fetchPokemon(pokemonName).then(
+      pokemon => setPokemon(pokemon),
+      error => setError(error),
+    )
   }, [pokemonName])
+
+  if (error) {
+    return (
+      <div role="alert">
+        There was an error:{' '}
+        <pre style={{whiteSpace: 'normal'}}>{error.message}</pre>
+        <img src={sadpokemon} alt="Error" />
+      </div>
+    )
+  }
 
   if (!pokemonName) {
     return 'Submit a pokemon'
