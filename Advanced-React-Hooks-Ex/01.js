@@ -14,7 +14,7 @@ const countReducer = (state, action) => {
       return {count: state.count + action.step}
     }
     default: {
-      throw new Error(`Unsupported action type of ${acttion.type}`)
+      throw new Error(`Unsupported action type of ${action.type}`)
     }
   }
 }
