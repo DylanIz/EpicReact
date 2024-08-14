@@ -13,7 +13,7 @@ import {
 function useSafeDispatch(dispatch) {
   const mountedRef = React.useRef(false)
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     mountedRef.current = true
     return () => {
       mountedRef.current = false
